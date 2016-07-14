@@ -34,17 +34,17 @@ using System.Net;
 
 namespace <#=BaseNamespace #>
 {
-		/// <summary>
-		/// InvoiceXpress <a href="<#= api.ApiUrl #>"><#= api.Name #></a> module
-		/// </summary>
-		public class <#= api.Name #>Repository
-		{
-			private readonly IApiClient apiClient;
+	/// <summary>
+	/// InvoiceXpress <a href="<#= api.ApiUrl #>"><#= api.Name #></a> module
+	/// </summary>
+	public class <#= api.Name #>Repository
+	{
+		private readonly IApiClient apiClient;
 
-			public <#= api.Name #>Repository(IApiClient apiClient)
-			{
-				this.apiClient = apiClient;
-			}
+		public <#= api.Name #>Repository(IApiClient apiClient)
+		{
+			this.apiClient = apiClient;
+		}
 <#+
 	    foreach (ClassNestedClassMethod mtd in api.Method)
 	    {
@@ -55,26 +55,25 @@ namespace <#=BaseNamespace #>
 	        string returnClassName = u.ReturnClassName;
 #>
 
-			/// <summary>
-			/// InvoiceXpress <a href="<#= mtd.ApiUrl ?? "" #>"><#=api.Name #> <#=mtd.Name #></a> Method
-			/// </summary>
-			public <#=returnClassName #> <#=mtd.Name #>(<#=u.MethodCallStr #>)
-			{
- 				string url = <#= u.UrlStringFormat #>;
-				var result = apiClient.Send("<#=mtd.HttpMethod #>", url, <#=mtd.SucessCode #><#= u.HasInput ? ", inputData.XmlSerializeToString()" : "" #>);
+		/// <summary>
+		/// InvoiceXpress <a href="<#= mtd.ApiUrl ?? "" #>"><#=api.Name #> <#=mtd.Name #></a> Method
+		/// </summary>
+		public <#=returnClassName #> <#=mtd.Name #>(<#=u.MethodCallStr #>)
+		{
+ 			string url = <#= u.UrlStringFormat #>;
+			<#= u.HasReturn ? "var result = " : "" #>apiClient.Send("<#=mtd.HttpMethod #>", url, <#=mtd.SucessCode #><#= u.HasInput ? ", inputData.XmlSerializeToString()" : "" #>);
 <#+
 			if (u.HasReturn) {
 #>
-				return result.<#=string.Format("DeserializeXml<{0}>()", returnClassName) #>;
+			return result.<#=string.Format("DeserializeXml<{0}>()", returnClassName) #>;
  <#+
 			}
  #>
-			}
+		}
 <#+
 	    }
 #>
-
-}
+	}
 }<#+
             m.EndBlock();
         }
