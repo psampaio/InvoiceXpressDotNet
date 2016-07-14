@@ -22,7 +22,7 @@ namespace InvoiceXpressDotNet
 			public AccountDto Create(AccountDto inputData)
 			{
  				string url = string.Format("https://www.app.invoicexpress.com/api/accounts/create.xml?api_key={0}", apiClient.ApiKey);
-				var result = apiClient.Post(url, 201, inputData.XmlSerializeToString());
+				var result = apiClient.Send("POST", url, 201, inputData.XmlSerializeToString());
 				return result.DeserializeXml<AccountDto>();
  			}
 
@@ -31,8 +31,8 @@ namespace InvoiceXpressDotNet
 			/// </summary>
 			public AccountDto Get(string accountId)
 			{
- 				string url = string.Format("https://{1}.app.invoicexpress.com/api/AccountNames/{AccountNameId}/get.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, accountId);
-				var result = apiClient.Get(url, 200);
+ 				string url = string.Format("https://{1}.app.invoicexpress.com/api/AccountNames/{2}/get.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, accountId);
+				var result = apiClient.Send("GET", url, 200);
 				return result.DeserializeXml<AccountDto>();
  			}
 
@@ -41,8 +41,8 @@ namespace InvoiceXpressDotNet
 			/// </summary>
 			public AccountStatsDto Stats(string accountId)
 			{
- 				string url = string.Format("https://{0}.app.invoicexpress.com/api/AccountNames/{AccountNameId}/stats.xml?api_key={2}", apiClient.AccountName, accountId, apiClient.ApiKey);
-				var result = apiClient.Get(url, 200);
+ 				string url = string.Format("https://{1}.app.invoicexpress.com/api/AccountNames/{2}/stats.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, accountId);
+				var result = apiClient.Send("GET", url, 200);
 				return result.DeserializeXml<AccountStatsDto>();
  			}
 
@@ -51,8 +51,8 @@ namespace InvoiceXpressDotNet
 			/// </summary>
 			public void Suspend(string accountId)
 			{
- 				string url = string.Format("https://{1}.app.invoicexpress.com/api/AccountNames/{AccountNameId}/suspend.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, accountId);
-				var result = apiClient.Put(url, 200);
+ 				string url = string.Format("https://{1}.app.invoicexpress.com/api/AccountNames/{2}/suspend.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, accountId);
+				var result = apiClient.Send("PUT", url, 200);
 			}
 
 			/// <summary>
@@ -60,8 +60,8 @@ namespace InvoiceXpressDotNet
 			/// </summary>
 			public void Activate(string accountId)
 			{
- 				string url = string.Format("https://{1}.app.invoicexpress.com/api/AccountNames/{AccountNameId}/activate.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, accountId);
-				var result = apiClient.Put(url, 200);
+ 				string url = string.Format("https://{1}.app.invoicexpress.com/api/AccountNames/{2}/activate.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, accountId);
+				var result = apiClient.Send("PUT", url, 200);
 			}
 
 			/// <summary>
@@ -69,8 +69,8 @@ namespace InvoiceXpressDotNet
 			/// </summary>
 			public void Update(string accountId, AccountDto inputData)
 			{
- 				string url = string.Format("https://{1}.app.invoicexpress.com/api/AccountNames/{AccountNameId}/update.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, accountId);
-				var result = apiClient.Put(url, 200, inputData.XmlSerializeToString());
+ 				string url = string.Format("https://{1}.app.invoicexpress.com/api/AccountNames/{2}/update.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, accountId);
+				var result = apiClient.Send("PUT", url, 200, inputData.XmlSerializeToString());
 			}
 
 }

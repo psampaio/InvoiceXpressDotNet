@@ -13,7 +13,7 @@
     </Method>
 
     <Method Name="Get" HttpMethod="GET"
-            Url="https://{accountName}.app.invoicexpress.com/api/AccountNames/{AccountNameId}/get.xml?api_key={apiKey}"
+            Url="https://{accountName}.app.invoicexpress.com/api/AccountNames/{accountId}/get.xml?api_key={apiKey}"
             ApiUrl="https://invoicexpress.com/api/accounts/get"
             SucessCode="200"
             ReturnClass="AccountDto">
@@ -25,19 +25,19 @@
     </Method>
 
     <Method Name="Stats" HttpMethod="GET"
-            Url="https://{accountName}.app.invoicexpress.com/api/AccountNames/{AccountNameId}/stats.xml?api_key={apiKey}"
+            Url="https://{accountName}.app.invoicexpress.com/api/AccountNames/{accountId}/stats.xml?api_key={apiKey}"
             ApiUrl="https://invoicexpress.com/api/accounts/stats"
             SucessCode="200"
             ReturnClass="AccountStatsDto">
       <UrlParms>
-        <Param Index="0" Name="accountName" Type="string" />
-        <Param Index="1" Name="accountId" Type="string" />
-        <Param Index="2" Name="apiKey" Type="string" />
+        <Param Index="0" Name="apiKey" Type="string" />
+        <Param Index="1" Name="accountName" Type="string" />
+        <Param Index="2" Name="accountId" Type="string" />
       </UrlParms>
     </Method>
 
     <Method Name="Suspend" HttpMethod="PUT"
-            Url="https://{accountName}.app.invoicexpress.com/api/AccountNames/{AccountNameId}/suspend.xml?api_key={apiKey}"
+            Url="https://{accountName}.app.invoicexpress.com/api/AccountNames/{accountId}/suspend.xml?api_key={apiKey}"
             ApiUrl="https://invoicexpress.com/api/accounts/suspend"
             SucessCode="200">
       <UrlParms>
@@ -48,7 +48,7 @@
     </Method>
 
     <Method Name="Activate" HttpMethod="PUT"
-            Url="https://{accountName}.app.invoicexpress.com/api/AccountNames/{AccountNameId}/activate.xml?api_key={apiKey}"
+            Url="https://{accountName}.app.invoicexpress.com/api/AccountNames/{accountId}/activate.xml?api_key={apiKey}"
             ApiUrl="https://invoicexpress.com/api/accounts/activate"
             SucessCode="200">
       <UrlParms>
@@ -59,7 +59,7 @@
     </Method>
 
     <Method Name="Update" HttpMethod="PUT"
-            Url="https://{accountName}.app.invoicexpress.com/api/AccountNames/{AccountNameId}/update.xml?api_key={apiKey}"
+            Url="https://{accountName}.app.invoicexpress.com/api/AccountNames/{accountId}/update.xml?api_key={apiKey}"
             ApiUrl="https://invoicexpress.com/api/accounts/update"
             SucessCode="200"
             InputClass="AccountDto">
@@ -86,6 +86,9 @@
             ApiUrl="https://invoicexpress.com/api/users/accounts"
             ReturnClass="UserAccountsDto"
             SucessCode="200">
+      <UrlParms>
+        <Param Index="0" Name="apiKey" Type="string" />
+      </UrlParms>
     </Method>
 
     <Method Name="ChangeAccount" HttpMethod="PUT"
@@ -93,6 +96,10 @@
             ApiUrl="https://invoicexpress.com/api/users/change-account"
             InputClass="ChangeAccountToDto"
             SucessCode="200">
+      <UrlParms>
+        <Param Index="0" Name="apiKey" Type="string" />
+        <Param Index="1" Name="accountName" Type="string" />
+      </UrlParms>
     </Method>
   </NestedClass>
 
@@ -521,19 +528,19 @@
       <UrlParms>
         <Param Index="0" Name="apiKey" Type="string" />
         <Param Index="1" Name="accountName" Type="string" />
-        <Param Index="2" Name="simplifiedInvoiceId" Type="string" />
+        <Param Index="2" Name="creditNoteId" Type="string" />
       </UrlParms>
     </Method>
 
   </NestedClass>
 
-  <NestedClass Name="CreditNotes" ApiUrl="https://invoicexpress.com/api/debit-notes">
+  <NestedClass Name="DebitNotes" ApiUrl="https://invoicexpress.com/api/debit-notes">
 
     <Method Name="Create" HttpMethod="POST"
             Url="https://{accountName}.app.invoicexpress.com/debit_notes.xml?api_key={apiKey}"
             ApiUrl="https://invoicexpress.com/api/debit-notes/create"
-            InputClass="CreditNoteDto"
-            ReturnClass="CreditNoteDto"
+            InputClass="DebitNoteDto"
+            ReturnClass="DebitNoteDto"
             SucessCode="201">
       <UrlParms>
         <Param Index="0" Name="apiKey" Type="string" />
@@ -542,33 +549,33 @@
     </Method>
 
     <Method Name="Get" HttpMethod="GET"
-            Url="https://{accountName}.app.invoicexpress.com/credit_notes/{creditNoteId}.xml?api_key={apiKey}"
-            ApiUrl="https://invoicexpress.com/api/credit-notes/get"
-            ReturnClass="CreditNoteDto"
+            Url="https://{accountName}.app.invoicexpress.com/debit_notes/{debitNoteId}.xml?api_key={apiKey}"
+            ApiUrl="https://invoicexpress.com/api/debit-notes/get"
+            ReturnClass="DebitNoteDto"
             SucessCode="200">
       <UrlParms>
         <Param Index="0" Name="apiKey" Type="string" />
         <Param Index="1" Name="accountName" Type="string" />
-        <Param Index="2" Name="creditNoteId" Type="string" />
+        <Param Index="2" Name="debitNoteId" Type="string" />
       </UrlParms>
     </Method>
 
     <Method Name="Update" HttpMethod="PUT"
-            Url="https://{accountName}.app.invoicexpress.com/credit_notes/{creditNoteId}.xml?api_key={apiKey}"
-            ApiUrl="https://invoicexpress.com/api/simplified-invoices/update"
-            InputClass="CreditNoteDto"
+            Url="https://{accountName}.app.invoicexpress.com/debit_notes/{debitNoteId}.xml?api_key={apiKey}"
+            ApiUrl="https://invoicexpress.com/api/debit-notes/update"
+            InputClass="DebitNoteDto"
             SucessCode="200">
       <UrlParms>
         <Param Index="0" Name="apiKey" Type="string" />
         <Param Index="1" Name="accountName" Type="string" />
-        <Param Index="2" Name="creditNoteId" Type="string" />
+        <Param Index="2" Name="debitNoteId" Type="string" />
       </UrlParms>
     </Method>
 
     <Method Name="List" HttpMethod="GET"
-            Url="https://{accountName}.app.invoicexpress.com/credit_notes.xml?api_key={apiKey}&amp;page={page}&amp;per_page={perPage}"
-            ApiUrl="https://invoicexpress.com/api/credit-notes/list"
-            ReturnClass="CreditNotesDto"
+            Url="https://{accountName}.app.invoicexpress.com/debit_notes.xml?api_key={apiKey}&amp;page={page}&amp;per_page={perPage}"
+            ApiUrl="https://invoicexpress.com/api/debit-notes/list"
+            ReturnClass="DebitNoteDto"
             SucessCode="200">
       <UrlParms>
         <Param Index="0" Name="apiKey" Type="string" />
@@ -579,38 +586,38 @@
     </Method>
 
     <Method Name="ChangeState" HttpMethod="PUT"
-            Url="https://{accountName}.app.invoicexpress.com/credit_notes/{creditNoteId}/change-state.xml?api_key={apiKey}"
-            ApiUrl="https://invoicexpress.com/api/credit-notes/change-state"
-            InputClass="CreditNoteChangeStateDto"
+            Url="https://{accountName}.app.invoicexpress.com/debit_notes/{debitNoteId}/change-state.xml?api_key={apiKey}"
+            ApiUrl="https://invoicexpress.com/api/debit-notes/change-state"
+            InputClass="DebitNoteChangeStateDto"
             SucessCode="200">
       <UrlParms>
         <Param Index="0" Name="apiKey" Type="string" />
         <Param Index="1" Name="accountName" Type="string" />
-        <Param Index="2" Name="creditNoteId" Type="string" />
+        <Param Index="2" Name="debitNoteId" Type="string" />
       </UrlParms>
     </Method>
 
     <Method Name="EmailDocument" HttpMethod="PUT"
-            Url="https://{accountName}.app.invoicexpress.com/credit_notes/{creditNoteId}/email-document.xml?api_key={apiKey}"
-            ApiUrl="https://invoicexpress.com/api/credit-notes/email"
+            Url="https://{accountName}.app.invoicexpress.com/debit_notes/{debitNoteId}/email-document.xml?api_key={apiKey}"
+            ApiUrl="https://invoicexpress.com/api/debit-notes/email"
             InputClass="EmailMessageDto"
             SucessCode="200">
       <UrlParms>
         <Param Index="0" Name="apiKey" Type="string" />
         <Param Index="1" Name="accountName" Type="string" />
-        <Param Index="2" Name="creditNoteId" Type="string" />
+        <Param Index="2" Name="debitNoteId" Type="string" />
       </UrlParms>
     </Method>
 
     <Method Name="Pdf" HttpMethod="GET"
-            Url="https://{accountName}.app.invoicexpress.com/api/pdf/{creditNoteId}.xml?api_key={apiKey}"
-            ApiUrl="https://invoicexpress.com/api/credit-notes/documents-pdf"
+            Url="https://{accountName}.app.invoicexpress.com/api/pdf/{debitNoteId}.xml?api_key={apiKey}"
+            ApiUrl="https://invoicexpress.com/api/debit-notes/documents-pdf"
             ReturnClass="PdfOutputDto"
             SucessCode="200">
       <UrlParms>
         <Param Index="0" Name="apiKey" Type="string" />
         <Param Index="1" Name="accountName" Type="string" />
-        <Param Index="2" Name="simplifiedInvoiceId" Type="string" />
+        <Param Index="2" Name="debitNoteId" Type="string" />
       </UrlParms>
     </Method>
 
@@ -657,7 +664,7 @@
     <Method Name="List" HttpMethod="GET"
             Url="https://{accountName}.app.invoicexpress.com/clients.xml?api_key={apiKey}&amp;page={page}&amp;per_page={perPage}"
             ApiUrl="https://invoicexpress.com/api/clients/list"
-            InputClass="ClientsDto"
+            ReturnClass="ClientsDto"
             SucessCode="200">
       <UrlParms>
         <Param Index="0" Name="apiKey" Type="string" />
@@ -735,7 +742,7 @@
     </Method>
 
     <Method Name="Update" HttpMethod="PUT"
-            Url="https://{accountName}.app.invoicexpress.com/clients/{clientId}.xml?api_key={apiKey}"
+            Url="https://{accountName}.app.invoicexpress.com/items/{itemId}.xml?api_key={apiKey}"
             ApiUrl="https://invoicexpress.com/api/items/update"
             InputClass="ItemDto"
             SucessCode="200">
@@ -1142,6 +1149,11 @@
 
     <Type XmlName="debit_notes" Name="DebitNotesDto" TypeAttribute="array">
       <Property XmlName="debit_note" Name="Items" Type="DebitNoteDto[]" />
+    </Type>
+
+    <Type XmlName="credit_note" Name="DebitNoteChangeStateDto">
+      <Property XmlName="state" Name="State" Type="DocumentState" />
+      <Property XmlName="message" Name="message" Type="string" />
     </Type>
 
   </Types>

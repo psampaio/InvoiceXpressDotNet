@@ -61,7 +61,7 @@ namespace <#=BaseNamespace #>
 			public <#=returnClassName #> <#=mtd.Name #>(<#=u.MethodCallStr #>)
 			{
  				string url = <#= u.UrlStringFormat #>;
-				var result = apiClient.<#= GetHttpMethod(mtd.HttpMethod) #>(url, <#=mtd.SucessCode #><#= u.HasInput ? ", inputData.XmlSerializeToString()" : "" #>);
+				var result = apiClient.Send("<#=mtd.HttpMethod #>", url, <#=mtd.SucessCode #><#= u.HasInput ? ", inputData.XmlSerializeToString()" : "" #>);
 <#+
 			if (u.HasReturn) {
 #>

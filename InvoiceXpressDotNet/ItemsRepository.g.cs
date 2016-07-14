@@ -22,7 +22,7 @@ namespace InvoiceXpressDotNet
 			public ItemDto Create(ItemDto inputData)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/items.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName);
-				var result = apiClient.Post(url, 201, inputData.XmlSerializeToString());
+				var result = apiClient.Send("POST", url, 201, inputData.XmlSerializeToString());
 				return result.DeserializeXml<ItemDto>();
  			}
 
@@ -32,7 +32,7 @@ namespace InvoiceXpressDotNet
 			public ItemDto Get(string itemId)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/items/{2}.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, itemId);
-				var result = apiClient.Get(url, 200);
+				var result = apiClient.Send("GET", url, 200);
 				return result.DeserializeXml<ItemDto>();
  			}
 
@@ -41,8 +41,8 @@ namespace InvoiceXpressDotNet
 			/// </summary>
 			public void Update(string itemId, ItemDto inputData)
 			{
- 				string url = string.Format("https://{1}.app.invoicexpress.com/clients/{clientId}.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, itemId);
-				var result = apiClient.Put(url, 200, inputData.XmlSerializeToString());
+ 				string url = string.Format("https://{1}.app.invoicexpress.com/items/{2}.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, itemId);
+				var result = apiClient.Send("PUT", url, 200, inputData.XmlSerializeToString());
 			}
 
 			/// <summary>
@@ -51,7 +51,7 @@ namespace InvoiceXpressDotNet
 			public void Delete(string itemId)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/items/{2}.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, itemId);
-				var result = apiClient.Delete(url, 200);
+				var result = apiClient.Send("DELETE", url, 200);
 			}
 
 			/// <summary>
@@ -60,7 +60,7 @@ namespace InvoiceXpressDotNet
 			public ItemsDto List()
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/items.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName);
-				var result = apiClient.Get(url, 200);
+				var result = apiClient.Send("GET", url, 200);
 				return result.DeserializeXml<ItemsDto>();
  			}
 

@@ -18,29 +18,9 @@ namespace InvoiceXpressDotNet
         public string AccountName { get; }
         public string ApiKey { get; }
 
-        public string Get(string url, int successCode, string data = null)
+        public string Send(string method, string url, int successCode, string data)
         {
-            return Send("GET", FormatUrl(url), successCode, data);
-        }
-
-        public string Post(string url, int successCode, string data = null)
-        {
-            return Send("POST", FormatUrl(url), successCode, data);
-        }
-
-        public string Put(string url, int successCode, string data = null)
-        {
-            return Send("PUT", FormatUrl(url), successCode, data);
-        }
-
-        public string Delete(string url, int successCode, string data = null)
-        {
-            return Send("DELETE", FormatUrl(url), successCode, data);
-        }
-
-        private string Send(string method, string url, int successCode, string data)
-        {
-            var request = (HttpWebRequest) WebRequest.Create(url);
+            var request = (HttpWebRequest) WebRequest.Create(string.Format(url, AccountName, ApiKey));
             request.Method = method;
             if (!string.IsNullOrWhiteSpace(data))
             {
@@ -83,11 +63,6 @@ namespace InvoiceXpressDotNet
             }
 
             return responseStr;
-        }
-
-        private string FormatUrl(string url)
-        {
-            return string.Format(url, AccountName, ApiKey);
         }
     }
 }

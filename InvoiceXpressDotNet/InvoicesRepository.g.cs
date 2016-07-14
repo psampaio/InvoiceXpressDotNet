@@ -22,7 +22,7 @@ namespace InvoiceXpressDotNet
 			public InvoiceDto Create(InvoiceDto inputData)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/invoices.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName);
-				var result = apiClient.Post(url, 201, inputData.XmlSerializeToString());
+				var result = apiClient.Send("POST", url, 201, inputData.XmlSerializeToString());
 				return result.DeserializeXml<InvoiceDto>();
  			}
 
@@ -32,7 +32,7 @@ namespace InvoiceXpressDotNet
 			public InvoiceDto Get(int invoiceId)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/invoices/{2}.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, invoiceId);
-				var result = apiClient.Get(url, 200);
+				var result = apiClient.Send("GET", url, 200);
 				return result.DeserializeXml<InvoiceDto>();
  			}
 
@@ -42,7 +42,7 @@ namespace InvoiceXpressDotNet
 			public void Update(int invoiceId, InvoiceDto inputData)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/invoices/{2}.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, invoiceId);
-				var result = apiClient.Put(url, 200, inputData.XmlSerializeToString());
+				var result = apiClient.Send("PUT", url, 200, inputData.XmlSerializeToString());
 			}
 
 			/// <summary>
@@ -51,7 +51,7 @@ namespace InvoiceXpressDotNet
 			public InvoicesDto List()
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/invoices.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName);
-				var result = apiClient.Get(url, 200);
+				var result = apiClient.Send("GET", url, 200);
 				return result.DeserializeXml<InvoicesDto>();
  			}
 
@@ -61,7 +61,7 @@ namespace InvoiceXpressDotNet
 			public InvoiceChangeStateDto ChangeState(int invoiceId, InvoiceChangeStateDto inputData)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/invoice/{2}/change-state.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, invoiceId);
-				var result = apiClient.Put(url, 200, inputData.XmlSerializeToString());
+				var result = apiClient.Send("PUT", url, 200, inputData.XmlSerializeToString());
 				return result.DeserializeXml<InvoiceChangeStateDto>();
  			}
 
@@ -71,7 +71,7 @@ namespace InvoiceXpressDotNet
 			public void EmailInvoice(int invoiceId, EmailMessageDto inputData)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/invoices/{2}/email-document.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, invoiceId);
-				var result = apiClient.Put(url, 200, inputData.XmlSerializeToString());
+				var result = apiClient.Send("PUT", url, 200, inputData.XmlSerializeToString());
 			}
 
 			/// <summary>
@@ -80,7 +80,7 @@ namespace InvoiceXpressDotNet
 			public InvoicesDto RelatedDocuments(int invoiceId)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/document/{2}/related_documents.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, invoiceId);
-				var result = apiClient.Get(url, 200);
+				var result = apiClient.Send("GET", url, 200);
 				return result.DeserializeXml<InvoicesDto>();
  			}
 
@@ -90,7 +90,7 @@ namespace InvoiceXpressDotNet
 			public PdfOutputDto Pdf(int invoiceId)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/api/pdf/{2}.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, invoiceId);
-				var result = apiClient.Get(url, 200);
+				var result = apiClient.Send("GET", url, 200);
 				return result.DeserializeXml<PdfOutputDto>();
  			}
 
@@ -100,7 +100,7 @@ namespace InvoiceXpressDotNet
 			public void Archive(string documentType, int documentId)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/{2}/{3}/archive.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, documentType, documentId);
-				var result = apiClient.Put(url, 200);
+				var result = apiClient.Send("PUT", url, 200);
 			}
 
 			/// <summary>
@@ -109,7 +109,7 @@ namespace InvoiceXpressDotNet
 			public void Unarchive(string documentType, int documentId)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/{2}/{3}/unarchive.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, documentType, documentId);
-				var result = apiClient.Put(url, 200);
+				var result = apiClient.Send("PUT", url, 200);
 			}
 
 			/// <summary>
@@ -118,7 +118,7 @@ namespace InvoiceXpressDotNet
 			public PartialPaymentReceiptDto PartialPayment(int documentId, PartialPaymentDto inputData)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/documents/{2}/partial_payments.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, documentId);
-				var result = apiClient.Post(url, 201, inputData.XmlSerializeToString());
+				var result = apiClient.Send("POST", url, 201, inputData.XmlSerializeToString());
 				return result.DeserializeXml<PartialPaymentReceiptDto>();
  			}
 

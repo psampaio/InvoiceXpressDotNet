@@ -22,7 +22,7 @@ namespace InvoiceXpressDotNet
 			public CreditNoteDto Create(CreditNoteDto inputData)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/credit_notes.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName);
-				var result = apiClient.Post(url, 201, inputData.XmlSerializeToString());
+				var result = apiClient.Send("POST", url, 201, inputData.XmlSerializeToString());
 				return result.DeserializeXml<CreditNoteDto>();
  			}
 
@@ -32,7 +32,7 @@ namespace InvoiceXpressDotNet
 			public CreditNoteDto Get(string creditNoteId)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/credit_notes/{2}.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, creditNoteId);
-				var result = apiClient.Get(url, 200);
+				var result = apiClient.Send("GET", url, 200);
 				return result.DeserializeXml<CreditNoteDto>();
  			}
 
@@ -42,7 +42,7 @@ namespace InvoiceXpressDotNet
 			public void Update(string creditNoteId, CreditNoteDto inputData)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/credit_notes/{2}.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, creditNoteId);
-				var result = apiClient.Put(url, 200, inputData.XmlSerializeToString());
+				var result = apiClient.Send("PUT", url, 200, inputData.XmlSerializeToString());
 			}
 
 			/// <summary>
@@ -51,7 +51,7 @@ namespace InvoiceXpressDotNet
 			public CreditNotesDto List(int? page, int? perPage)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/credit_notes.xml?api_key={0}&page={2}&per_page={3}", apiClient.ApiKey, apiClient.AccountName, page, perPage);
-				var result = apiClient.Get(url, 200);
+				var result = apiClient.Send("GET", url, 200);
 				return result.DeserializeXml<CreditNotesDto>();
  			}
 
@@ -61,7 +61,7 @@ namespace InvoiceXpressDotNet
 			public void ChangeState(string creditNoteId, CreditNoteChangeStateDto inputData)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/credit_notes/{2}/change-state.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, creditNoteId);
-				var result = apiClient.Put(url, 200, inputData.XmlSerializeToString());
+				var result = apiClient.Send("PUT", url, 200, inputData.XmlSerializeToString());
 			}
 
 			/// <summary>
@@ -70,16 +70,16 @@ namespace InvoiceXpressDotNet
 			public void EmailDocument(string creditNoteId, EmailMessageDto inputData)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/credit_notes/{2}/email-document.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, creditNoteId);
-				var result = apiClient.Put(url, 200, inputData.XmlSerializeToString());
+				var result = apiClient.Send("PUT", url, 200, inputData.XmlSerializeToString());
 			}
 
 			/// <summary>
 			/// InvoiceXpress <a href="https://invoicexpress.com/api/credit-notes/documents-pdf">CreditNotes Pdf</a> Method
 			/// </summary>
-			public PdfOutputDto Pdf(string simplifiedInvoiceId)
+			public PdfOutputDto Pdf(string creditNoteId)
 			{
- 				string url = string.Format("https://{1}.app.invoicexpress.com/api/pdf/{creditNoteId}.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, simplifiedInvoiceId);
-				var result = apiClient.Get(url, 200);
+ 				string url = string.Format("https://{1}.app.invoicexpress.com/api/pdf/{2}.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, creditNoteId);
+				var result = apiClient.Send("GET", url, 200);
 				return result.DeserializeXml<PdfOutputDto>();
  			}
 

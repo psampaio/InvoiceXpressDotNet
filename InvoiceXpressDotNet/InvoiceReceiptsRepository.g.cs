@@ -22,7 +22,7 @@ namespace InvoiceXpressDotNet
 			public InvoiceReceiptDto Create(InvoiceReceiptDto inputData)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/invoice_receipts.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName);
-				var result = apiClient.Post(url, 201, inputData.XmlSerializeToString());
+				var result = apiClient.Send("POST", url, 201, inputData.XmlSerializeToString());
 				return result.DeserializeXml<InvoiceReceiptDto>();
  			}
 
@@ -32,7 +32,7 @@ namespace InvoiceXpressDotNet
 			public InvoiceReceiptDto Get(int invoiceReceiptId)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/invoice_receipts/{2}.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, invoiceReceiptId);
-				var result = apiClient.Get(url, 200);
+				var result = apiClient.Send("GET", url, 200);
 				return result.DeserializeXml<InvoiceReceiptDto>();
  			}
 
@@ -42,7 +42,7 @@ namespace InvoiceXpressDotNet
 			public void Update(int invoiceReceiptId, InvoiceReceiptDto inputData)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/invoice_receipts/{2}.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, invoiceReceiptId);
-				var result = apiClient.Put(url, 200, inputData.XmlSerializeToString());
+				var result = apiClient.Send("PUT", url, 200, inputData.XmlSerializeToString());
 			}
 
 			/// <summary>
@@ -51,7 +51,7 @@ namespace InvoiceXpressDotNet
 			public InvoiceReceiptsDto List()
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/invoice_receipts.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName);
-				var result = apiClient.Get(url, 200);
+				var result = apiClient.Send("GET", url, 200);
 				return result.DeserializeXml<InvoiceReceiptsDto>();
  			}
 
@@ -61,7 +61,7 @@ namespace InvoiceXpressDotNet
 			public InvoiceReceiptChangeStateDto ChangeState(int invoiceReceiptId, InvoiceReceiptChangeStateDto inputData)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/invoice_receipts/{2}/change-state.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, invoiceReceiptId);
-				var result = apiClient.Put(url, 200, inputData.XmlSerializeToString());
+				var result = apiClient.Send("PUT", url, 200, inputData.XmlSerializeToString());
 				return result.DeserializeXml<InvoiceReceiptChangeStateDto>();
  			}
 
@@ -71,7 +71,7 @@ namespace InvoiceXpressDotNet
 			public void EmailInvoice(int invoiceReceiptId, EmailMessageDto inputData)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/invoice_receipts/{2}/email-document.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, invoiceReceiptId);
-				var result = apiClient.Put(url, 200, inputData.XmlSerializeToString());
+				var result = apiClient.Send("PUT", url, 200, inputData.XmlSerializeToString());
 			}
 
 			/// <summary>
@@ -80,7 +80,7 @@ namespace InvoiceXpressDotNet
 			public InvoicesDto RelatedDocuments(int invoiceReceiptId)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/document/{2}/related_documents.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, invoiceReceiptId);
-				var result = apiClient.Get(url, 200);
+				var result = apiClient.Send("GET", url, 200);
 				return result.DeserializeXml<InvoicesDto>();
  			}
 
@@ -90,7 +90,7 @@ namespace InvoiceXpressDotNet
 			public PdfOutputDto Pdf(int invoiceReceiptId)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/api/pdf/{2}.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, invoiceReceiptId);
-				var result = apiClient.Get(url, 200);
+				var result = apiClient.Send("GET", url, 200);
 				return result.DeserializeXml<PdfOutputDto>();
  			}
 

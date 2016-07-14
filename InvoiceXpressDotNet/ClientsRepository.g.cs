@@ -22,7 +22,7 @@ namespace InvoiceXpressDotNet
 			public ClientDto Create(ClientDto inputData)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/clients.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName);
-				var result = apiClient.Post(url, 201, inputData.XmlSerializeToString());
+				var result = apiClient.Send("POST", url, 201, inputData.XmlSerializeToString());
 				return result.DeserializeXml<ClientDto>();
  			}
 
@@ -32,7 +32,7 @@ namespace InvoiceXpressDotNet
 			public ClientDto Get(string clientId)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/clients/{2}.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, clientId);
-				var result = apiClient.Get(url, 200);
+				var result = apiClient.Send("GET", url, 200);
 				return result.DeserializeXml<ClientDto>();
  			}
 
@@ -42,17 +42,18 @@ namespace InvoiceXpressDotNet
 			public void Update(string clientId, ClientDto inputData)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/clients/{2}.xml?api_key={0}", apiClient.ApiKey, apiClient.AccountName, clientId);
-				var result = apiClient.Put(url, 200, inputData.XmlSerializeToString());
+				var result = apiClient.Send("PUT", url, 200, inputData.XmlSerializeToString());
 			}
 
 			/// <summary>
 			/// InvoiceXpress <a href="https://invoicexpress.com/api/clients/list">Clients List</a> Method
 			/// </summary>
-			public void List(int? page, int? perPage, ClientsDto inputData)
+			public ClientsDto List(int? page, int? perPage)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/clients.xml?api_key={0}&page={2}&per_page={3}", apiClient.ApiKey, apiClient.AccountName, page, perPage);
-				var result = apiClient.Get(url, 200, inputData.XmlSerializeToString());
-			}
+				var result = apiClient.Send("GET", url, 200);
+				return result.DeserializeXml<ClientsDto>();
+ 			}
 
 			/// <summary>
 			/// InvoiceXpress <a href="https://invoicexpress.com/api/clients/list-invoice">Clients Invoices</a> Method
@@ -60,7 +61,7 @@ namespace InvoiceXpressDotNet
 			public InvoicesDto Invoices(string clientId, int? page, int? perPage)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/clients/{2}/invoices.xml?api_key={0}&page={3}&per_page={4}", apiClient.ApiKey, apiClient.AccountName, clientId, page, perPage);
-				var result = apiClient.Get(url, 200);
+				var result = apiClient.Send("GET", url, 200);
 				return result.DeserializeXml<InvoicesDto>();
  			}
 
@@ -70,7 +71,7 @@ namespace InvoiceXpressDotNet
 			public ClientDto FindByName(string clientName)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/clients/find-by-name.xml?api_key={0}&client_name={2}", apiClient.ApiKey, apiClient.AccountName, clientName);
-				var result = apiClient.Get(url, 200);
+				var result = apiClient.Send("GET", url, 200);
 				return result.DeserializeXml<ClientDto>();
  			}
 
@@ -80,7 +81,7 @@ namespace InvoiceXpressDotNet
 			public ClientDto FindByCode(string clientCode)
 			{
  				string url = string.Format("https://{1}.app.invoicexpress.com/clients/find-by-code.xml?api_key={0}&client_code={2}", apiClient.ApiKey, apiClient.AccountName, clientCode);
-				var result = apiClient.Get(url, 200);
+				var result = apiClient.Send("GET", url, 200);
 				return result.DeserializeXml<ClientDto>();
  			}
 
