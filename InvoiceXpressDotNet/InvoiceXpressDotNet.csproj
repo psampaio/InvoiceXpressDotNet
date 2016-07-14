@@ -89,10 +89,16 @@
     <Compile Include="CreditNotesRepository.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
+    <Compile Include="DebitNoteChangeStateDto.g.cs">
+      <DependentUpon>ClassGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="DebitNoteDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="DebitNotesDto.g.cs">
+      <DependentUpon>ClassGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DebitNotesRepository.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="DocumentsStatsDto.g.cs">
