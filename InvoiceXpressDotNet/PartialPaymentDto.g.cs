@@ -1,6 +1,6 @@
 using System;
 using System.Xml.Serialization;
-using System.ComponentModel;
+
 namespace InvoiceXpressDotNet
 {
 	[XmlRoot("partial_payment"), XmlType(AnonymousType=true)]
@@ -19,7 +19,7 @@ namespace InvoiceXpressDotNet
 		[XmlIgnore]
 		public float? Amount { get; set; }
 		
-		[XmlElement("amount"), EditorBrowsableAttribute(EditorBrowsableState.Never), Browsable(false)]
+		[XmlElement("amount")]
 	    public string _AmountDto
 	    {	    
 			get { return Amount.ToXml<float?>(); }
@@ -29,7 +29,7 @@ namespace InvoiceXpressDotNet
 		[XmlIgnore]
 		public DateTime? PaymentDate { get; set; }
 		
-		[XmlElement("payment_date"), EditorBrowsableAttribute(EditorBrowsableState.Never), Browsable(false)]
+		[XmlElement("payment_date")]
 	    public string _PaymentDateDto
 	    {	    
 			get { return PaymentDate.ToXml<DateTime?>(); }

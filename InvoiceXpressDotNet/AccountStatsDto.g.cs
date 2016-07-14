@@ -1,9 +1,9 @@
 using System;
 using System.Xml.Serialization;
-using System.ComponentModel;
+
 namespace InvoiceXpressDotNet
 {
-	[XmlRoot("account_stats"), XmlType(AnonymousType=true)]
+	[XmlRoot("AccountName_stats"), XmlType(AnonymousType=true)]
 	public partial class AccountStatsDto : Dto
 	{		
 		

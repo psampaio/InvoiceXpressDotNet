@@ -1,15 +1,15 @@
 using System;
 using System.Xml.Serialization;
-using System.ComponentModel;
+
 namespace InvoiceXpressDotNet
 {
-	[XmlRoot("accounts"), XmlType(AnonymousType=true)]
+	[XmlRoot("AccountNames"), XmlType(AnonymousType=true)]
 	public partial class AccountsDto : Dto
 	{		
 		[XmlAttribute]
 		public string type = "array";
 		
-		[XmlElement("account")]
+		[XmlElement("AccountName")]
 		public AccountDto[] Items { get; set; }
 		
 		/*

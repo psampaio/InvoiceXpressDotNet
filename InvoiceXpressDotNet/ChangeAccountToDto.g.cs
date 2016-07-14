@@ -1,16 +1,16 @@
 using System;
 using System.Xml.Serialization;
-using System.ComponentModel;
+
 namespace InvoiceXpressDotNet
 {
-	[XmlRoot("change_account_to"), XmlType(AnonymousType=true)]
+	[XmlRoot("change_AccountName_to"), XmlType(AnonymousType=true)]
 	public partial class ChangeAccountToDto : Dto
 	{		
 		
 		[XmlIgnore]
 		public int? Id { get; set; }
 		
-		[XmlElement("id"), EditorBrowsableAttribute(EditorBrowsableState.Never), Browsable(false)]
+		[XmlElement("id")]
 	    public string _IdDto
 	    {	    
 			get { return Id.ToXml<int?>(); }

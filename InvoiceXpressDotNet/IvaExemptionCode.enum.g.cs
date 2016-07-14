@@ -1,6 +1,5 @@
-using System;
+﻿using System;
 using System.Xml.Serialization;
-using System.ComponentModel;
 
 namespace InvoiceXpressDotNet
 {

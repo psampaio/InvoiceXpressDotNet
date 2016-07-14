@@ -1,6 +1,6 @@
 using System;
 using System.Xml.Serialization;
-using System.ComponentModel;
+
 namespace InvoiceXpressDotNet
 {
 	[XmlRoot("event"), XmlType(AnonymousType=true)]
@@ -13,7 +13,7 @@ namespace InvoiceXpressDotNet
 		[XmlIgnore]
 		public DateTime? Date { get; set; }
 		
-		[XmlElement("date"), EditorBrowsableAttribute(EditorBrowsableState.Never), Browsable(false)]
+		[XmlElement("date")]
 	    public string _DateDto
 	    {	    
 			get { return Date.ToXml<DateTime?>(); }

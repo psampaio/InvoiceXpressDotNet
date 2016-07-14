@@ -1,6 +1,6 @@
 using System;
 using System.Xml.Serialization;
-using System.ComponentModel;
+
 namespace InvoiceXpressDotNet
 {
 	[XmlRoot("client"), XmlType(AnonymousType=true)]
@@ -10,7 +10,7 @@ namespace InvoiceXpressDotNet
 		[XmlIgnore]
 		public int? Id { get; set; }
 		
-		[XmlElement("id"), EditorBrowsableAttribute(EditorBrowsableState.Never), Browsable(false)]
+		[XmlElement("id")]
 	    public string _IdDto
 	    {	    
 			get { return Id.ToXml<int?>(); }
@@ -59,7 +59,7 @@ namespace InvoiceXpressDotNet
 		[XmlElement("observations")]
 		public string Observations { get; set; }
 		
-		[XmlElement("open_account_link")]
+		[XmlElement("open_AccountName_link")]
 		public string OpenAccountLink { get; set; }
 		
 		[XmlElement("send_options")]

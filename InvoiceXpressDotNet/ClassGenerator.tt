@@ -25,22 +25,26 @@
     {
         foreach (ClassNestedClass api in mc.NestedClass)
         {
-            m.StartNewFile(string.Format("{0}.g.cs", api.Name));
+			var className = string.Format("{0}Repository", api.Name);
+            m.StartNewFile(string.Format("{0}.g.cs", className));
             PrintFileHeader();
 #>
 using System;
 using System.Net;
-using System.ComponentModel;
 
 namespace <#=BaseNamespace #>
 {
-	public static partial class InvoiceExpress
-    {
 		/// <summary>
 		/// InvoiceXpress <a href="<#= api.ApiUrl #>"><#= api.Name #></a> module
 		/// </summary>
-		public static class <#= api.Name #>
+		public class <#= api.Name #>Repository
 		{
+			private readonly IApiClient apiClient;
+
+			public <#= api.Name #>Repository(IApiClient apiClient)
+			{
+				this.apiClient = apiClient;
+			}
 <#+
 	    foreach (ClassNestedClassMethod mtd in api.Method)
 	    {
@@ -54,41 +58,22 @@ namespace <#=BaseNamespace #>
 			/// <summary>
 			/// InvoiceXpress <a href="<#= mtd.ApiUrl ?? "" #>"><#=api.Name #> <#=mtd.Name #></a> Method
 			/// </summary>
-			[EditorBrowsableAttribute(EditorBrowsableState.Never)]
-			public static string Rest_<#=mtd.Name #>(<#=u.MethodSignatureStr #>)
+			public <#=returnClassName #> <#=mtd.Name #>(<#=u.MethodCallStr #>)
 			{
-				string url = <#= u.UrlStringFormat #>;
-				var result = url.Http<#= GetHttpMethod(mtd.HttpMethod) #>(<#= u.HasInput ? "inputData" : "" #>);
-				if ((int) result.StatusCode != <#=mtd.SucessCode #>)
-					throw new System.Exception(string.Format("Invalid HttpStatusCode. Expected {0}", (HttpStatusCode)<#=mtd.SucessCode #>)
-						, new Exception(result.Text));
-				return result.Text;
-			}
-
-			/// <summary>
-			/// InvoiceXpress <a href="<#= mtd.ApiUrl ?? "" #>"><#=api.Name #> <#=mtd.Name #></a> Method
-			/// </summary>
-			public static <#=returnClassName #> <#=mtd.Name #>(<#=u.MethodCallStr #>)
-			{
+ 				string url = <#= u.UrlStringFormat #>;
+				var result = apiClient.<#= GetHttpMethod(mtd.HttpMethod) #>(url, <#=mtd.SucessCode #><#= u.HasInput ? ", inputData.XmlSerializeToString()" : "" #>);
 <#+
-	        string deserializePart = u.HasReturn ? string.Format(".DeserializeXml<{0}>()", returnClassName) : string.Empty;
-	        Write("\t\t\t\t");
-	        string invocationCall = u.HasInput
-	            ? string.Format("Rest_{0}({1}{2}inputData.XmlSerializeToString())", mtd.Name,
-	                u.MethodCallParameters, string.IsNullOrEmpty(u.MethodCallParameters) ? "" : ", ")
-	            : string.Format("Rest_{0}({1})", mtd.Name, u.MethodCallParameters);
-
-	        WriteLine(u.HasReturn
-	            ? string.Format("string xmlResult = {0};\r\n\t\t\t    return xmlResult{1};", invocationCall,
-	                deserializePart)
-	            : string.Format("{0};", invocationCall));
+			if (u.HasReturn) {
 #>
+				return result.<#=string.Format("DeserializeXml<{0}>()", returnClassName) #>;
+ <#+
+			}
+ #>
 			}
 <#+
 	    }
 #>
 
-	}
 }
 }<#+
             m.EndBlock();
@@ -103,7 +88,7 @@ namespace <#=BaseNamespace #>
 #>
 using System;
 using System.Xml.Serialization;
-using System.ComponentModel;
+
 namespace <#= BaseNamespace #>
 {
 	[XmlRoot("<#= type.XmlName #>"), XmlType(AnonymousType=true)]
@@ -133,7 +118,7 @@ namespace <#= BaseNamespace #>
 		[XmlIgnore]
 		public <#= p.Type #> <#=p.Name #> { get; set; }
 		
-		[XmlElement("<#=p.XmlName #>"), EditorBrowsableAttribute(EditorBrowsableState.Never), Browsable(false)]
+		[XmlElement("<#=p.XmlName #>")]
 	    public string _<#=p.Name #>Dto
 	    {	    
 			get { return <#=p.Name #>.ToXml<<#= p.Type #>>(); }
@@ -166,7 +151,6 @@ namespace <#= BaseNamespace #>
 #>
 using System;
 using System.Xml.Serialization;
-using System.ComponentModel;
 
 namespace <#= BaseNamespace #>
 {
@@ -289,13 +273,20 @@ namespace <#= BaseNamespace #>
             {
                 maskedUrl = maskedUrl.Replace(string.Format("{{{0}}}", p.Name), string.Format("{{{0}}}", p.Index));
                 sbUrlStringFormat.Append(string.Format(", {0}", p.Name));
-                sbParameterList.Append(sbParameterList.Length > 0
-                    ? string.Format(", {0} {1}", p.Type, p.Name)
-                    : string.Format("{0} {1}", p.Type, p.Name));
 
-                sbArgumentList.Append(sbArgumentList.Length > 0
-                    ? string.Format(", {0}", p.Name)
-                    : string.Format("{0}", p.Name));
+				if (p.Name == "apiKey") {
+					sbUrlStringFormat.Replace("apiKey", "apiClient.ApiKey");
+				} else if (p.Name == "accountName") {
+					sbUrlStringFormat.Replace("accountName", "apiClient.AccountName");
+				} else {
+					sbParameterList.Append(sbParameterList.Length > 0
+						? string.Format(", {0} {1}", p.Type, p.Name)
+						: string.Format("{0} {1}", p.Type, p.Name));
+
+					sbArgumentList.Append(sbArgumentList.Length > 0
+						? string.Format(", {0}", p.Name)
+						: string.Format("{0}", p.Name));
+				}
             }
         }
 
@@ -313,8 +304,14 @@ namespace <#= BaseNamespace #>
                         : string.Format("{0} inputData", up.InputClassName));
         }
 
+//        var urlFormat = sbParameterList.Length > 0
+//							 ? string.Format("string.Format(\"{0}\"{1})", maskedUrl, sbUrlStringFormat)
+//							 : "\"" + maskedUrl + "\"";
+
+//		urlFormat = urlFormat.Replace("{accountName}", "{{0}}");
+
         up.UrlStringFormat = string.Format("string.Format(\"{0}\"{1})", maskedUrl, sbUrlStringFormat);
-        up.MethodSignatureStr = m1SignatureStr;
+		up.MethodSignatureStr = m1SignatureStr;
         up.MethodCallStr = m2SignatureStr;
         up.MethodCallParameters = sbArgumentList.ToString();
         return up;

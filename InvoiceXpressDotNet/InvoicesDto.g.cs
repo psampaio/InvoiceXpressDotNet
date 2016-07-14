@@ -1,6 +1,6 @@
 using System;
 using System.Xml.Serialization;
-using System.ComponentModel;
+
 namespace InvoiceXpressDotNet
 {
 	[XmlRoot("invoices"), XmlType(AnonymousType=true)]
@@ -15,7 +15,7 @@ namespace InvoiceXpressDotNet
 		[XmlIgnore]
 		public int? CurrentPage { get; set; }
 		
-		[XmlElement("current_page"), EditorBrowsableAttribute(EditorBrowsableState.Never), Browsable(false)]
+		[XmlElement("current_page")]
 	    public string _CurrentPageDto
 	    {	    
 			get { return CurrentPage.ToXml<int?>(); }
@@ -25,7 +25,7 @@ namespace InvoiceXpressDotNet
 		[XmlIgnore]
 		public int? TotalPages { get; set; }
 		
-		[XmlElement("total_pages"), EditorBrowsableAttribute(EditorBrowsableState.Never), Browsable(false)]
+		[XmlElement("total_pages")]
 	    public string _TotalPagesDto
 	    {	    
 			get { return TotalPages.ToXml<int?>(); }
@@ -35,7 +35,7 @@ namespace InvoiceXpressDotNet
 		[XmlIgnore]
 		public int? TotalEntries { get; set; }
 		
-		[XmlElement("total_entries"), EditorBrowsableAttribute(EditorBrowsableState.Never), Browsable(false)]
+		[XmlElement("total_entries")]
 	    public string _TotalEntriesDto
 	    {	    
 			get { return TotalEntries.ToXml<int?>(); }
@@ -45,7 +45,7 @@ namespace InvoiceXpressDotNet
 		[XmlIgnore]
 		public int? PerPage { get; set; }
 		
-		[XmlElement("per_page"), EditorBrowsableAttribute(EditorBrowsableState.Never), Browsable(false)]
+		[XmlElement("per_page")]
 	    public string _PerPageDto
 	    {	    
 			get { return PerPage.ToXml<int?>(); }

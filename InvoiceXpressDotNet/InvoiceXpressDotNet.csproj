@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>InvoiceXpressDotNet</RootNamespace>
     <AssemblyName>InvoiceXpressDotNet</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -47,15 +47,16 @@
     <Compile Include="AccountDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="Accounts.g.cs">
+    <Compile Include="AccountsDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="AccountsDto.g.cs">
+    <Compile Include="AccountsRepository.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="AccountStatsDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
+    <Compile Include="ApiClient.cs" />
     <Compile Include="ChangeAccountToDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
@@ -67,10 +68,10 @@
     <Compile Include="ClientDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="Clients.g.cs">
+    <Compile Include="ClientsDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="ClientsDto.g.cs">
+    <Compile Include="ClientsRepository.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="CredentialsDto.g.cs">
@@ -82,10 +83,10 @@
     <Compile Include="CreditNoteDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="CreditNotes.g.cs">
+    <Compile Include="CreditNotesDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="CreditNotesDto.g.cs">
+    <Compile Include="CreditNotesRepository.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="DebitNoteDto.g.cs">
@@ -112,6 +113,7 @@
     <Compile Include="EventsDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
+    <Compile Include="IApiClient.cs" />
     <Compile Include="InvoiceChangeStateDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
@@ -124,25 +126,25 @@
     <Compile Include="InvoiceReceiptDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="InvoiceReceipts.g.cs">
-      <DependentUpon>ClassGenerator.tt</DependentUpon>
-    </Compile>
     <Compile Include="InvoiceReceiptsDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="Invoices.g.cs">
+    <Compile Include="InvoiceReceiptsRepository.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="InvoicesDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
+    <Compile Include="InvoicesRepository.g.cs">
+      <DependentUpon>ClassGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="ItemDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="Items.g.cs">
+    <Compile Include="ItemsDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="ItemsDto.g.cs">
+    <Compile Include="ItemsRepository.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="IvaExemptionCode.enum.g.cs">
@@ -175,22 +177,23 @@
     <Compile Include="SimplifiedInvoiceDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="SimplifiedInvoices.g.cs">
+    <Compile Include="SimplifiedInvoicesDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="SimplifiedInvoicesDto.g.cs">
+    <Compile Include="SimplifiedInvoicesRepository.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="TaxDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
+    <Compile Include="test.cs" />
     <Compile Include="UserAccountDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="UserAccountsDto.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="Users.g.cs">
+    <Compile Include="UsersRepository.g.cs">
       <DependentUpon>ClassGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="UsersStatsDto.g.cs">
@@ -200,7 +203,6 @@
     <Compile Include="Dto.cs" />
     <Compile Include="XmlExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebRequestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassGenerator.tt">

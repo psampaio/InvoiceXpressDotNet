@@ -1,6 +1,6 @@
 using System;
 using System.Xml.Serialization;
-using System.ComponentModel;
+
 namespace InvoiceXpressDotNet
 {
 	[XmlRoot("users"), XmlType(AnonymousType=true)]
@@ -10,7 +10,7 @@ namespace InvoiceXpressDotNet
 		[XmlIgnore]
 		public int? UsedUsers { get; set; }
 		
-		[XmlElement("used_users"), EditorBrowsableAttribute(EditorBrowsableState.Never), Browsable(false)]
+		[XmlElement("used_users")]
 	    public string _UsedUsersDto
 	    {	    
 			get { return UsedUsers.ToXml<int?>(); }
@@ -20,7 +20,7 @@ namespace InvoiceXpressDotNet
 		[XmlIgnore]
 		public int? AvailableUsers { get; set; }
 		
-		[XmlElement("available_users"), EditorBrowsableAttribute(EditorBrowsableState.Never), Browsable(false)]
+		[XmlElement("available_users")]
 	    public string _AvailableUsersDto
 	    {	    
 			get { return AvailableUsers.ToXml<int?>(); }

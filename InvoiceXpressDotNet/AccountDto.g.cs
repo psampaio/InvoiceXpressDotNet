@@ -1,9 +1,9 @@
 using System;
 using System.Xml.Serialization;
-using System.ComponentModel;
+
 namespace InvoiceXpressDotNet
 {
-	[XmlRoot("account"), XmlType(AnonymousType=true)]
+	[XmlRoot("AccountName"), XmlType(AnonymousType=true)]
 	public partial class AccountDto : Dto
 	{		
 		
@@ -40,7 +40,7 @@ namespace InvoiceXpressDotNet
 		[XmlIgnore]
 		public int? Id { get; set; }
 		
-		[XmlElement("id"), EditorBrowsableAttribute(EditorBrowsableState.Never), Browsable(false)]
+		[XmlElement("id")]
 	    public string _IdDto
 	    {	    
 			get { return Id.ToXml<int?>(); }
